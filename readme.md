@@ -57,13 +57,13 @@ Nenhuma dependência externa é necessária. A aplicação utiliza apenas a bibl
 gerenciadorescolar.py
 │
 ├── Configuração inicial
-│   ├── menu          — Tupla com as opções do menu principal
-│   ├── edicoes       — Tupla com as opções do submenu de edição
-│   └── sistema       — Dicionário principal que armazena todos os alunos
+│   ├── menu_de_opcoes    — Dicionário com as opções do menu principal
+│   ├── menu_de_edicoes   — Dicionário com as opções do submenu de edição
+│   └── sistema           — Dicionário principal que armazena todos os alunos
 │
 ├── Funções utilitárias
-│   ├── lin()         — Imprime uma linha separadora configurável
-│   └── opcoes()      — Exibe o menu principal ou o submenu de edição
+│   ├── lin()             — Imprime uma linha separadora configurável
+│   └── opcoes()          — Exibe o menu principal ou o submenu de edição
 │
 ├── Funções de operação
 │   ├── cadastrar_aluno()   — Coleta e valida dados; registra no dicionário
@@ -74,7 +74,7 @@ gerenciadorescolar.py
 │   └── relatorio_final()   — Agrega e exibe estatísticas gerais do sistema
 │
 └── Loop principal
-    └── while True    — Controla a navegação entre as opções do menu
+    └── while True          — Controla a navegação entre as opções do menu
 ```
 
 **Estrutura de dados de cada aluno:**
@@ -96,10 +96,8 @@ sistema = {
 
 As melhorias planejadas para as próximas versões incluem:
 
-- **Persistência em arquivo `.txt`** — Salvar e carregar os dados do sistema em arquivos de texto simples, permitindo que as informações sejam mantidas entre sessões.
-- **Persistência em arquivo `.json`** — Serializar o dicionário `sistema` em formato JSON, oferecendo uma solução mais estruturada e adequada para integração futura com outras ferramentas.
-
-Ambas as implementações exigirão o uso do módulo `json` da biblioteca padrão do Python e o tratamento de erros relacionados a leitura e escrita de arquivos.
+- **Persistência em arquivo `.json`** — Serializar o dicionário `sistema` em formato JSON, permitindo que os dados sejam salvos e carregados entre sessões. Exigirá o uso do módulo `json` da biblioteca padrão e tratamento de erros relacionados à leitura e escrita de arquivos.
+- **Estrutura modular** — Separar o código em um pacote `core/` com módulos independentes por responsabilidade (operações sobre alunos, relatório, arquivo, interface), e um `main.py` como ponto de entrada. Tornará o projeto mais organizado, legível e fácil de expandir.
 
 ---
 
