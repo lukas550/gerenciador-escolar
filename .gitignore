@@ -10,3 +10,6 @@ ENV/
 # Configurações de IDEs e editores
 .vscode/
 .idea/
+
+# Projeto
+alunos.json
