@@ -132,3 +132,40 @@ def editar_aluno(sistema, aluno, edicao, escolha):
         aluno['informacao'] = nova_info
 
     return aluno
+
+def gerar_relatorio(sistema):
+    # Validações
+    if not isinstance(sistema, list):
+        raise TypeError("Sistema deve ser uma lista!")
+
+    if not sistema:
+        raise TypeError("Sem alunos cadastrados no sistema!")
+
+    # Gera Relatório:
+    relatorio = {
+        "quantidade_de_alunos": len(sistema),
+        "aprovados": [],
+        "reprovados": [],
+        "maior_media": None,
+        "menor_media": None,
+        "media_turma": None
+    }
+
+    medias = []
+    for aluno in sistema:
+        medias.append(aluno['media'])
+
+        if aluno['situacao']:
+            relatorio["aprovados"].append(aluno["nome"])
+        else:
+            relatorio["reprovados"].append(aluno["nome"])
+
+    maior_media = max(medias)
+    menor_media = min(medias)
+    media_turma = (sum(medias) / len(sistema))
+
+    relatorio["maior_media"] = maior_media
+    relatorio["menor_media"] = menor_media
+    relatorio["media_turma"] = media_turma
+
+    return relatorio
