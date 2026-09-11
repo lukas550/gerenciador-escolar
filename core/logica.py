@@ -28,14 +28,13 @@ def adicionar_aluno(nome, notas, descricao):
             raise ValueError(f"A nota {nota} é inválida!")
         
     media = sum(notas) / 3
-    situacao = True if media > 6 else False
 
     # Cria e retorna dicionário
     aluno_dicionario = {
         "nome": nome.lower().strip(),
         "notas": notas,
         "media": media,
-        "situacao": situacao,
+        "situacao": True if media >= 6 else False,
         "informacao": descricao.lower().strip()
     }
 
@@ -88,4 +87,48 @@ def excluir_aluno(sistema, aluno, confirmacao=False):
 
     # Exclusão
     sistema.remove(aluno)
+    return aluno
+
+def editar_aluno(sistema, aluno, edicao, escolha):
+    """
+    Edições:
+    1. Editar notas
+    2. Editar nome
+    3. Editar informações
+    """
+    # Validações
+    if not isinstance(sistema, list):
+        raise TypeError("Sistema deve ser uma lista!")
+
+    if not sistema or not aluno.strip() or not edicao or not escolha:
+        raise TypeError("As informações estão inválidas!")
+
+    # Escolha:
+    if escolha.strip().lower() == "1":
+        # Edita notas
+        if len(edicao) != 3:
+            raise ValueError("Deve haver no mínimo 3 notas!")
+
+        for nota in edicao:
+            if nota < 0 or nota > 10:
+                raise ValueError(f"A nota {nota} é inválida!")
+
+        aluno['notas'] = edicao
+        aluno['media'] = sum(aluno['notas']) / 3
+        aluno['situacao'] = True if aluno['media'] >= 6 else False
+
+    elif escolha.strip().lower() == "2":
+        # Edita nome
+        novo_nome = edicao.lower().strip()
+        if not novo_nome:
+            raise ValueError("Nome não pode estar vazio!")
+        aluno['nome'] = novo_nome
+
+    elif escolha.strip().lower() == "3":
+        # Edita Informações
+        nova_info = edicao.strip()
+        if len(nova_info) < 3 or len(nova_info) > 50:
+            raise ValueError("Informação deve ter 3-50 caracteres!")
+        aluno['informacao'] = nova_info
+
     return aluno
