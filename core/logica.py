@@ -74,3 +74,18 @@ def buscar_aluno(sistema, aluno_buscado):
         raise TypeError(f"Aluno {aluno_buscado.capitalize()} não foi encontrado!")
 
     return aluno_achado
+
+def excluir_aluno(sistema, aluno, confirmacao=False):
+    # Validações
+    if not isinstance(sistema, list):
+        raise TypeError("Sistema deve ser uma lista!")
+
+    if not sistema or not aluno.strip():
+        raise TypeError("As informações estão inválidas!")
+
+    if not confirmacao:
+        raise TypeError("Operação cancelada.")
+
+    # Exclusão
+    sistema.remove(aluno)
+    return aluno
