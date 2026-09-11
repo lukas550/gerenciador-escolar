@@ -13,6 +13,7 @@ Funções:
 # Funções do CRUD
 
 def adicionar_aluno(nome, notas, descricao):
+    # Validações
     if not nome.strip() or not descricao.strip():
         raise ValueError("Informações inválidas!")
 
@@ -29,6 +30,7 @@ def adicionar_aluno(nome, notas, descricao):
     media = sum(notas) / 3
     situacao = True if media > 6 else False
 
+    # Cria e retorna dicionário
     aluno_dicionario = {
         "nome": nome.lower().strip(),
         "notas": notas,
@@ -40,12 +42,35 @@ def adicionar_aluno(nome, notas, descricao):
     return aluno_dicionario
 
 def listar_alunos(sistema):
+    # Validações
     if not isinstance(sistema, list):
         raise TypeError("Sistema deve ser uma lista.")
 
     if not sistema:
         raise TypeError("Sem alunos no sistema!")
 
+    # Lista os alunos
     for aluno in sistema:
         situacao_do_aluno = "Aprovado" if aluno['situacao'] else "Reprovado"
         print(f"- {aluno['nome'].capitalize()} | Média: {aluno['media']:.2f} | {situacao_do_aluno} | {aluno['informacao']}")
+
+def buscar_aluno(sistema, aluno_buscado):
+    # Validações
+    if not isinstance(sistema, list):
+        raise TypeError("Sistema deve ser uma lista!")
+
+    if not sistema or not aluno_buscado.strip():
+        raise TypeError("As informações estão inválidas!")
+
+    # Busca
+    encontrado = False
+    for aluno in sistema:
+        if aluno["nome"] == aluno_buscado.lower().strip():
+            encontrado = True
+            aluno_achado = aluno
+            break
+
+    if not encontrado:
+        raise TypeError(f"Aluno {aluno_buscado.capitalize()} não foi encontrado!")
+
+    return aluno_achado
