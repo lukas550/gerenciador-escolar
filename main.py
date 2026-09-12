@@ -213,7 +213,7 @@ while True:
                         # Edita, valida e salva novo nome
                         editar_aluno(sistema, aluno_para_editar, novo_nome, "2")
                         salvar_arquivo(sistema)
-                        print("\nNome editado com sucesso!")
+                        print("\nNome editado com sucesso!\n")
 
                     except ValueError as e:
                         print(f"\n{e}\n")
@@ -231,7 +231,7 @@ while True:
                         # Edita, valida e salva nova informação
                         editar_aluno(sistema, aluno_para_editar, nova_informacao, "3")
                         salvar_arquivo(sistema)
-                        print("\nInformação editada com sucesso!")
+                        print("\nInformação editada com sucesso!\n")
 
                     except ValueError as e:
                         print(f"\n{e}\n")
@@ -275,7 +275,31 @@ while True:
         lin("-")
 
     elif escolha == "6":
-        pass
+        lin("-")
+        try:
+            relatorio = gerar_relatorio(sistema)
+
+            lin("=", 40)
+            print("     Relatório Geral     ")
+            lin("=", 40)
+
+            print(f"\n[1] Quantidades de alunos: {relatorio['quantidade_de_alunos']}")
+            print("[2] Aprovados:")
+            for aluno in relatorio["aprovados"]:
+                print(f"   - {aluno}")
+
+            print("\n[3] Reprovados:")
+            for aluno in relatorio["reprovados"]:
+                print(f"   - {aluno}")
+
+            print(f"\n[4] Maior média: {relatorio['maior_media']:.2f}")
+            print(f"[5] Menor média: {relatorio['menor_media']:.2f}")
+            print(f"[6] Média da turma: {relatorio['media_turma']:.2f}\n")
+
+        except TypeError as e:
+            print(f"\n{e}\n")
+
+        lin("-")
 
     elif escolha == "7":
         lin("-")
