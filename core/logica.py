@@ -126,7 +126,7 @@ def editar_aluno(sistema, aluno, edicao, escolha):
 
     elif escolha.strip().lower() == "3":
         # Edita Informações
-        nova_info = edicao.strip()
+        nova_info = edicao
         if len(nova_info) < 3 or len(nova_info) > 50:
             raise ValueError("Informação deve ter 3-50 caracteres!")
         aluno['informacao'] = nova_info

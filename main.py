@@ -142,10 +142,137 @@ while True:
 
         except TypeError as e:
             print(f"\n{e}\n")
+
         lin("-")
 
     elif escolha == "5":
-        pass
+
+        lin("-")
+        # Encontra aluno para edições
+        try:
+            print("\nDigite o nome do aluno buscado:")
+            aluno_buscado = input(">> ")
+
+            aluno_para_editar = buscar_aluno(sistema, aluno_buscado)
+        except TypeError as e:
+            print(f"\n{e}\n")
+            continue
+
+        # Entra em edições
+        print("\nEntrando em edições...\n")
+        try:        
+            lin("=")
+            menu(menu_edicoes)
+            lin("=")
+            print('Sempre que quiser ver a tabela de edições digite "edição"!\n')
+
+            while True:
+                print("Digite o número da edição ou comando que deseja:")
+                escolha_edicao = input(">> ").lower().strip()
+
+                if escolha_edicao in ["edicao", "ediçao", "edição"]: # Visualiza menu
+
+                    lin("=")
+                    menu(menu_edicoes)
+                    lin("=")
+            
+                elif escolha_edicao == "1": # Edita notas
+
+                    lin("=")
+                    try:
+                        # Captura as novas notas do aluno
+                        novas_notas = []
+                        while len(novas_notas) != 3:
+                            try:
+                               print(f"\nDigite a nota {len(novas_notas) + 1} do aluno {aluno_para_editar['nome'].capitalize()}:")
+                               nova_nota = float(input(">> "))
+
+                               novas_notas.append(nova_nota)
+
+                            except ValueError:
+                                print("\nDigite uma nota válida!\n")
+
+                        # Edita as notas, média e situação do aluno:
+                        editar_aluno(sistema, aluno_para_editar, novas_notas, "1")
+                        salvar_arquivo(sistema)
+                        print("\nNotas editadas com sucesso!\n")
+
+                    except ValueError as e:
+                        print(f"\n{e}\n")
+
+                    lin("=")
+
+                elif escolha_edicao == "2": # Edita nome
+
+                    lin("=")
+                    try:
+                        # Captura novo nome
+                        print("\nDigite o novo nome:")
+                        novo_nome = input(">> ")
+
+                        # Edita, valida e salva novo nome
+                        editar_aluno(sistema, aluno_para_editar, novo_nome, "2")
+                        salvar_arquivo(sistema)
+                        print("\nNome editado com sucesso!")
+
+                    except ValueError as e:
+                        print(f"\n{e}\n")
+
+                    lin("=")
+
+                elif escolha_edicao == "3":
+
+                    lin("=")
+                    try:
+                        # Captura nova informacao
+                        print("\nDigite a nova informação, 3-50 caracteres!")
+                        nova_informacao = input(">> ")
+
+                        # Edita, valida e salva nova informação
+                        editar_aluno(sistema, aluno_para_editar, nova_informacao, "3")
+                        salvar_arquivo(sistema)
+                        print("\nInformação editada com sucesso!")
+
+                    except ValueError as e:
+                        print(f"\n{e}\n")
+
+                    lin("=")
+
+                elif escolha_edicao == "4":
+
+                    # Captura e válida saida
+                    lin("=")
+                    while True:
+                        print("\nDeseja encerrar edições? (sim/não): ")
+                        confirmacao = input(">> ").lower().strip()
+
+                        if confirmacao in ["sim", "ss", "s"]:
+                            confirmacao_saida = True
+                            break
+
+                        elif confirmacao in ["não", "nao", "nn", "n"]:
+                            confirmacao_saida = False
+                            break
+
+                        else:
+                            print("\nDigite algo válido!\n")
+
+                    if confirmacao_saida:
+                        print("\nEncerrando edições, voltando ao menu principal...\n")
+                        lin("=")
+                        break
+                    else:
+                        print("\nOperação cancelada.\n")
+                        lin("=")
+                        continue
+
+                else:
+                    print("\nDigite algo válido!\n")
+
+        except TypeError as e:
+            print(f"\n{e}\n")
+
+        lin("-")
 
     elif escolha == "6":
         pass
