@@ -82,6 +82,7 @@ while True:
 
         lin("-")
         try:
+            # Lista os alunos
             listar_alunos(sistema)
 
         except TypeError as e:
@@ -90,7 +91,23 @@ while True:
         lin("-")
 
     elif escolha == "3":
-        pass
+
+        lin("-")
+        try:
+            # Captura nome do aluno
+            print("\nDigite o nome do aluno buscado (verifique a opção 2):")
+            aluno_buscado = input(">> ")
+
+            # Encontra e imprime o aluno encontrado
+            aluno_encontrado = buscar_aluno(sistema, aluno_buscado)
+            situacao_do_aluno = "Aprovado" if aluno_encontrado["situacao"] else "Reprovado"
+
+            print(f"\n- {aluno_encontrado['nome'].capitalize()} | Média: {aluno_encontrado['media']:.2f} | {situacao_do_aluno} | {aluno_encontrado['informacao']}\n")
+
+        except TypeError as e:
+            print(f"\n{e}\n")
+
+        lin("-")
 
     elif escolha == "4":
         pass
