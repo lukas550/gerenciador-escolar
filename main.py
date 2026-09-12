@@ -110,7 +110,39 @@ while True:
         lin("-")
 
     elif escolha == "4":
-        pass
+
+        lin("-")
+        try:
+            # Captura nome do aluno e encontra aluno
+            print("\nDigite o nome do aluno buscado para excluir (verifique a opção 2): ")
+            aluno_buscado = input(">> ")
+            aluno_encontrado = buscar_aluno(sistema, aluno_buscado)
+
+            # Captura confirmação e valida
+            while True:
+                print(f"\nRealmente deseja excluir {aluno_encontrado['nome'].capitalize()}? Essa ação é irreversivel! (sim/não):")
+                confirmacao = input(">> ").lower().strip()
+
+                if confirmacao in ["sim", "ss", "s"]:
+                    excluir_confirmacao = True
+                    break
+
+                elif confirmacao in ["não", "nn", "nao", "n"]:
+                    excluir_confirmacao = False
+                    break
+
+                else:
+                    print("\nDigite algo válido!\n")
+
+            # Exclui aluno e salva a exclusão
+            aluno_excluido = excluir_aluno(sistema, aluno_encontrado, excluir_confirmacao)
+            salvar_arquivo(sistema)
+
+            print(f"Aluno {aluno_excluido['nome'].capitalize()} foi excluído!\n")
+
+        except TypeError as e:
+            print(f"\n{e}\n")
+        lin("-")
 
     elif escolha == "5":
         pass

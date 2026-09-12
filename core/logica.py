@@ -79,7 +79,7 @@ def excluir_aluno(sistema, aluno, confirmacao=False):
     if not isinstance(sistema, list):
         raise TypeError("Sistema deve ser uma lista!")
 
-    if not sistema or not aluno.strip():
+    if not sistema or not aluno["nome"].strip():
         raise TypeError("As informações estão inválidas!")
 
     if not confirmacao:
