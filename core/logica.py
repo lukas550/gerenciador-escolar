@@ -79,7 +79,7 @@ def excluir_aluno(sistema, aluno, confirmacao=False):
     if not isinstance(sistema, list):
         raise TypeError("Sistema deve ser uma lista!")
 
-    if not sistema or not aluno["nome"].strip():
+    if not sistema or not aluno["nome"]:
         raise TypeError("As informações estão inválidas!")
 
     if not confirmacao:
@@ -100,7 +100,7 @@ def editar_aluno(sistema, aluno, edicao, escolha):
     if not isinstance(sistema, list):
         raise TypeError("Sistema deve ser uma lista!")
 
-    if not sistema or not aluno.strip() or not edicao or not escolha:
+    if not sistema or not aluno or not edicao or not escolha:
         raise TypeError("As informações estão inválidas!")
 
     # Escolha:
