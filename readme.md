@@ -14,7 +14,7 @@ O projeto foi desenvolvido como exercício prático de consolidação dos fundam
 
 ## Como Funciona
 
-Ao iniciar o programa, o menu principal é exibido no terminal. O usuário navega pelo sistema digitando o número correspondente à opção desejada. Todas as operações — cadastro, listagem, busca, remoção, edição e relatório — são executadas sobre um dicionário em memória que representa o banco de dados da sessão.
+Ao iniciar o programa, o menu principal é exibido no terminal. O usuário navega pelo sistema digitando o número correspondente à opção desejada. Todas as operações — cadastro, listagem, busca, remoção, edição e relatório — são executadas sobre uma lista em memória carregada a partir do arquivo `alunos.json`. Os dados são salvos automaticamente após cada operação que modifica o sistema.
 
 A situação de cada aluno (aprovado ou reprovado) é calculada automaticamente com base na média das três notas, usando o critério de aprovação com média igual ou superior a 6.0.
 
@@ -22,82 +22,68 @@ A situação de cada aluno (aprovado ou reprovado) é calculada automaticamente 
 
 ## Funcionalidades
 
-- **Cadastrar Aluno** — Registra nome, informações descritivas e três notas. Calcula média e situação automaticamente.
-- **Listar Nomes** — Exibe todos os alunos cadastrados com média e situação.
+- **Adicionar Aluno** — Registra nome, informações descritivas e três notas. Calcula média e situação automaticamente.
+- **Listar Alunos** — Exibe todos os alunos cadastrados com média e situação.
 - **Buscar Aluno** — Localiza um aluno pelo nome e exibe seus dados completos.
-- **Remover Aluno** — Remove um aluno do sistema com confirmação obrigatória antes da exclusão.
-- **Editar Aluno** — Permite editar notas, nome ou informações de um aluno individualmente.
-- **Relatório Final** — Exibe total de alunos, listas de aprovados e reprovados, maior e menor média, e média geral da turma.
-- **Sair** — Encerra o programa.
+- **Excluir Aluno** — Remove um aluno do sistema com confirmação obrigatória antes da exclusão.
+- **Editar Aluno** — Permite editar notas, nome ou informações de um aluno individualmente via submenu.
+- **Relatório Geral** — Exibe total de alunos, listas de aprovados e reprovados, maior e menor média, e média geral da turma.
+- **Sair** — Encerra o programa com confirmação obrigatória.
 
 ---
 
 ## Como Executar
 
-**Requisito:** Python 3.10 ou superior (uso de f-strings com expressões aninhadas).
+**Requisito:** Python 3.10 ou superior.
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/gerenciador-escolar.git
+git clone https://github.com/lukas550/gerenciador-escolar.git
 
 # Acesse o diretório
 cd gerenciador-escolar
 
 # Execute o programa
-python gerenciadorescolar.py
+python main.py
 ```
 
 Nenhuma dependência externa é necessária. A aplicação utiliza apenas a biblioteca padrão do Python.
 
 ---
 
-## Estrutura do Código
+## Estrutura do Projeto
 
 ```
-gerenciadorescolar.py
+gerenciador-escolar/
 │
-├── Configuração inicial
-│   ├── menu_de_opcoes    — Dicionário com as opções do menu principal
-│   ├── menu_de_edicoes   — Dicionário com as opções do submenu de edição
-│   └── sistema           — Dicionário principal que armazena todos os alunos
+├── main.py                  — Ponto de entrada; loop principal e interface com o usuário
 │
-├── Funções utilitárias
-│   ├── lin()             — Imprime uma linha separadora configurável
-│   └── opcoes()          — Exibe o menu principal ou o submenu de edição
-│
-├── Funções de operação
-│   ├── cadastrar_aluno()   — Coleta e valida dados; registra no dicionário
-│   ├── listar_nomes()      — Itera sobre o dicionário e exibe resumo dos alunos
-│   ├── buscar_alunos()     — Busca por chave no dicionário e exibe dados completos
-│   ├── remover_aluno()     — Remove entrada do dicionário com confirmação
-│   ├── editar_aluno()      — Submenu para edição parcial dos dados de um aluno
-│   └── relatorio_final()   — Agrega e exibe estatísticas gerais do sistema
-│
-└── Loop principal
-    └── while True          — Controla a navegação entre as opções do menu
+└── core/
+    ├── logica.py            — Funções de CRUD e relatório
+    ├── armazenamento.py     — Leitura e escrita do arquivo alunos.json
+    └── organizacao.py       — Utilitários de exibição (menu e linha decorativa)
 ```
+
+**Responsabilidades por módulo:**
+
+- `main.py` — Captura inputs, valida entradas do usuário, chama funções dos módulos e exibe resultados.
+- `core/logica.py` — Contém `adicionar_aluno()`, `listar_alunos()`, `buscar_aluno()`, `excluir_aluno()`, `editar_aluno()` e `gerar_relatorio()`. Todas as funções validam os dados recebidos e lançam exceções em caso de erro.
+- `core/armazenamento.py` — Contém `salvar_arquivo()` e `carregar_arquivo()`. Gerencia a persistência dos dados em `alunos.json` com tratamento de erros de I/O.
+- `core/organizacao.py` — Contém `lin()` (linha separadora configurável) e `menu()` (exibe dicionário como menu numerado).
 
 **Estrutura de dados de cada aluno:**
 
 ```python
-sistema = {
-    "nome_do_aluno": {
-        "notas": [nota1, nota2, nota3],
-        "media": float,
-        "situacao": "aprovado" | "reprovado",
-        "informacao": str
-    }
+{
+    "nome": str,
+    "notas": [float, float, float],
+    "media": float,
+    "situacao": bool,
+    "informacao": str
 }
 ```
 
----
-
-## Futuras Alterações
-
-As melhorias planejadas para as próximas versões incluem:
-
-- **Persistência em arquivo `.json`** — Serializar o dicionário `sistema` em formato JSON, permitindo que os dados sejam salvos e carregados entre sessões. Exigirá o uso do módulo `json` da biblioteca padrão e tratamento de erros relacionados à leitura e escrita de arquivos.
-- **Estrutura modular** — Separar o código em um pacote `core/` com módulos independentes por responsabilidade (operações sobre alunos, relatório, arquivo, interface), e um `main.py` como ponto de entrada. Tornará o projeto mais organizado, legível e fácil de expandir.
+Os alunos são armazenados em uma lista de dicionários, serializada em `alunos.json`.
 
 ---
 
@@ -113,8 +99,10 @@ As melhorias planejadas para as próximas versões incluem:
 - Laços de repetição (`while`, `for`)
 - Tratamento de erros com `try`, `except`, `else` e `raise`
 - Métodos de string: `.lower()`, `.strip()`, `.capitalize()`, `.join()`
-- Operações com coleções: iteração, adição, remoção e acesso por chave
-- Funções nativas: `len()`, `sum()`, `max()`, `min()`, `enumerate()`
+- Operações com coleções: iteração, adição, remoção e acesso por índice
+- Funções nativas: `len()`, `sum()`, `max()`, `min()`
+- Módulo `json` da biblioteca padrão para persistência de dados
+- Organização em pacote Python com módulos independentes por responsabilidade
 
 ---
 
