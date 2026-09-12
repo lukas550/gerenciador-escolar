@@ -79,7 +79,15 @@ while True:
         lin("-")
 
     elif escolha == "2":
-        pass
+
+        lin("-")
+        try:
+            listar_alunos(sistema)
+
+        except TypeError as e:
+            print(f"\n{e}\n")
+
+        lin("-")
 
     elif escolha == "3":
         pass
