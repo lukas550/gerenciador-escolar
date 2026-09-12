@@ -46,7 +46,37 @@ while True:
         lin("-")
 
     elif escolha == "1":
-        pass
+        lin("-")
+        try:
+            # Captura nome do aluno
+            print("\nDigite o nome do aluno: ")
+            nome_do_aluno = input(">> ")
+
+            # Captura descrição do aluno
+            print(f"\nDigite a descrição de {nome_do_aluno.capitalize()}, 3-50 caracteres!")
+            informacao_do_aluno = input(">> ")
+
+            # Captura notas do aluno
+            notas_do_aluno = []
+            while len(notas_do_aluno) != 3:
+                try:
+                    print(f"\nDigite a nota {len(notas_do_aluno) + 1} de {nome_do_aluno.capitalize()}:")
+                    nota_do_aluno = float(input(">> "))
+
+                    notas_do_aluno.append(nota_do_aluno)
+                except ValueError:
+                    print("\nNota inválida!\n")
+
+            # Salva e registra aluno
+            aluno_a_adicionar = adicionar_aluno(nome_do_aluno, notas_do_aluno, informacao_do_aluno)
+            sistema.append(aluno_a_adicionar)
+            salvar_arquivo(sistema)
+
+            print()
+        except ValueError as e:
+            print(f"\n{e}\n")
+
+        lin("-")
 
     elif escolha == "2":
         pass

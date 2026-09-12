@@ -35,7 +35,7 @@ def adicionar_aluno(nome, notas, descricao):
         "notas": notas,
         "media": media,
         "situacao": True if media >= 6 else False,
-        "informacao": descricao.lower().strip()
+        "informacao": descricao
     }
 
     return aluno_dicionario
